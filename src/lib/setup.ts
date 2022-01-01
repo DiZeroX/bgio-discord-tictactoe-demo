@@ -10,6 +10,8 @@ import { config } from 'dotenv-cra';
 import { join } from 'path';
 import { inspect } from 'util';
 import { srcDir } from './constants';
+import { container } from '@sapphire/framework';
+import type { TictactoeGame } from './games/tictactoe/TictactoeGame';
 
 // Read env var
 config({ path: join(srcDir, '.env') });
@@ -19,3 +21,11 @@ inspect.defaultOptions.depth = 1;
 
 // Enable colorette
 colorette.createColors({ useColor: true });
+
+container.games = {};
+
+declare module '@sapphire/pieces' {
+	interface Container {
+		games: { [key: string]: TictactoeGame };
+	}
+}
